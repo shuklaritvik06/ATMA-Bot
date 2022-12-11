@@ -7,18 +7,25 @@ const {
   bookService,
   raiseTicket,
   giveFeedback,
-  payNow,
-  search,
   helpFunc,
+  rentService,
+  doitNow,
+  ownerInfo,
+  buyItem,
 } = require("./controllers/botController");
-
+const listOne = ["Appliance", "Grocery"];
+const regexList = [/^service/gi, /^grocery/gi, /^other/gi];
 const bot = new Telegraf(process.env.TOKEN);
 bot.start(welcome);
-bot.hears("Добавить услугу", addOwner);
-bot.hears("Заказать услугу", bookService);
-bot.action("book", payNow);
-bot.hears("Поднять билет", raiseTicket);
-bot.hears("Дать обратную связь", giveFeedback);
+bot.command("add", addOwner);
+bot.command("book", bookService);
+bot.command("raise", raiseTicket);
+bot.command("feedback", giveFeedback);
+bot.command("help", helpFunc);
+bot.action(/^owner/g, ownerInfo);
+bot.action(/^book/g, buyItem);
+bot.action(listOne, rentService);
+bot.action(regexList, doitNow);
+bot.action("start", bookService);
 bot.help(helpFunc);
-bot.on("inline_query", search);
 bot.launch();
