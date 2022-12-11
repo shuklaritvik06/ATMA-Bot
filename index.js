@@ -12,7 +12,7 @@ const {
   doitNow,
   ownerInfo,
   buyItem,
-} = require("./controllers/botController");
+} = require("./src/controllers/botController");
 const listOne = ["Appliance", "Grocery"];
 const regexList = [/^service/gi, /^grocery/gi, /^other/gi];
 const bot = new Telegraf(process.env.TOKEN);
